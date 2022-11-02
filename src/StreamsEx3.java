@@ -19,16 +19,26 @@ public class StreamsEx3 {
         while ((tmp = reader.readLine()) != null){
             words.addAll(Arrays.asList(tmp.split(" ")));
         }
-        System.out.println(words);
 
+        List<String> wordCollection = createCleanlist(words);
+        printData(wordCollection);
+
+
+    }
+
+    private static void printData(List<String> wordCollection) {
+        System.out.println("Amount of words with 5 letters: " +wordCollection.stream()
+                .filter(word -> word.length()==5)
+                .count());
+        System.out.println("Amount of words that starts with 'S' letter: " + wordCollection.stream()
+                .filter(word ->word.startsWith("s"))
+                .count());
+    }
+
+    private static List<String> createCleanlist(List<String> words) {
         List<String> wordCollection = words.stream()
                 .map(word -> word.replaceAll(",", "").replaceAll("\\.", "").trim())
                 .collect(Collectors.toList());
-
-        System.out.println(wordCollection.stream()
-                .filter(word -> word.length()==5)
-                .count() + " / " + wordCollection.size());
-
-
+        return wordCollection;
     }
 }
